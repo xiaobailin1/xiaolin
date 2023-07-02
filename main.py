@@ -1,5 +1,4 @@
 import random
-import requests
 from time import localtime
 from requests import get, post
 from datetime import datetime, date
@@ -9,11 +8,9 @@ import os
  
  
 def get_color():
+    # 获取随机颜色
     get_colors = lambda n: list(map(lambda i: "#" + "%06x" % random.randint(0, 0xFFFFFF), range(n)))
     color_list = get_colors(100)
-    if not color_list:
-        # 如果列表为空，则提供默认颜色
-        color_list = ['#000000']
     return random.choice(color_list)
  
  
@@ -109,9 +106,10 @@ def get_ciba():
     url = "http://open.iciba.com/dsapi/"
     headers = {
         'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
     }
-    r = requests.get(url, headers=headers)
+    r = get(url, headers=headers)
     note_en = r.json()["content"]
     note_ch = r.json()["note"]
     return note_ch, note_en
